@@ -1,0 +1,6 @@
+{
+  "name": "local-mods",
+  "owner": { "name": "Afterthoughtt" },
+  "description": "Afterthoughtt's Claude Code mods",
+  "plugins": [{ "name": "status-line", "source": "./" }]
+}
