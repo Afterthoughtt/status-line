@@ -85,9 +85,9 @@ const refreshGit = async ($: EngineInterface) => {
 }
 
 export const register: Register = (on, options) => {
-  // The home computer's hostname draws dim; any other host draws in the theme's blue.
-  // Unset, every host draws dim.
-  const homeHost = typeof options.home_host === 'string' ? options.home_host.trim().toLowerCase() : ''
+  // On the main computer the hostname draws dim; on any other it draws in the theme's blue.
+  // A per-machine switch rather than a name, so renaming a machine changes nothing.
+  const isMainComputer = options.main_computer === true
 
   on('session.start', async ($, e, next) => {
     const result = await next(e)
@@ -163,7 +163,7 @@ export const register: Register = (on, options) => {
         {host || label ? (
           <Box flexDirection="row" alignItems="center" gap={2} flexShrink={0}>
             {host ? (
-              !homeHost || host.toLowerCase() === homeHost
+              isMainComputer
                 ? <Text size="footnote" dimColor>{host}</Text>
                 : <Text size="footnote" color="suggestion">{host}</Text>
             ) : null}

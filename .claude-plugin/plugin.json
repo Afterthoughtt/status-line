@@ -1,15 +1,17 @@
 {
   "name": "status-line",
   "description": "A status row above the prompt in the Desktop app: the session's context fill (amber at 200k, red at 250k), and the computer, git account and branch it runs on",
-  "author": { "name": "Afterthoughtt" },
+  "author": {
+    "name": "Afterthoughtt"
+  },
   "repository": "https://github.com/Afterthoughtt/status-line",
   "types": "./types/index.d.ts",
   "userConfig": {
-    "home_host": {
-      "type": "string",
-      "title": "Home computer",
-      "description": "The short hostname (hostname -s) of your main computer. It draws dim and any other computer draws in blue, so a remote session stands out. Leave empty to draw every hostname dim.",
-      "default": ""
+    "main_computer": {
+      "type": "boolean",
+      "title": "Main computer",
+      "description": "Turn on for your main computer only: its hostname draws dim, and every other computer's draws in blue, so a session on another machine stands out.",
+      "default": false
     }
   }
 }

@@ -13,14 +13,14 @@ From a shell, with `claude` on your PATH (or the Desktop app's bundled copy in i
 
 ```bash
 claude plugin marketplace add Afterthoughtt/status-line
-claude plugin install status-line@local-mods --config home_host=<your main computer's hostname>
+claude plugin install status-line@local-mods
 ```
 
 The row shows in new Desktop sessions, or after `/reload-plugins` in an open one. To have each push reach you on its own, add `"autoUpdate": true` to the `local-mods` entry under `extraKnownMarketplaces` in `~/.claude/settings.json`. Claude Code then checks the repo shortly after a session starts.
 
 ## Setting
 
-**Home computer** (`home_host`): the short hostname (`hostname -s`) of your main computer. It draws dim, and any other computer draws in blue, so a session on another machine stands out. Left empty, every hostname draws dim.
+**Main computer** (`main_computer`, off by default): turn it on for your main computer only, by adding `--config main_computer=true` to the install line there. That computer's hostname draws dim and every other computer's draws in blue, so a session on another machine stands out. It's a switch on each machine rather than a name, so renaming a computer changes nothing.
 
 ## Development
 

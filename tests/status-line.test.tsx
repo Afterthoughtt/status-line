@@ -157,7 +157,7 @@ describe('status-line git label', () => {
   const start = ($: Engine) =>
     $.session.start({ cwd: '/code/app', surface: 'desktop', isInteractive: true })
 
-  test('names the account from the SSH host alias and the branch', async ($, on) => {
+  test('names the account from the SSH host alias and the branch', { options: { main_computer: true } }, async ($, on) => {
     on('session.usage', usage({ window: 1_000_000, tokens: 42_300, percent: 4 }))
     checkout(on, { remote: 'git@github-octocat:octocat/app.git', branch: 'main' })
     await start($)
@@ -213,7 +213,7 @@ describe('status-line git label', () => {
     await ui.unmount()
   })
 
-  test('draws any other host in blue', { options: { home_host: 'laptop' } }, async ($, on) => {
+  test('draws any other computer in blue', async ($, on) => {
     on('session.usage', usage({ window: 1_000_000, tokens: 42_300, percent: 4 }))
     checkout(on, { remote: null, branch: 'main' }, 'mini')
     await start($)
@@ -223,19 +223,7 @@ describe('status-line git label', () => {
     await ui.unmount()
   })
 
-  test('draws the home host dim, ignoring case', { options: { home_host: 'laptop' } }, async ($, on) => {
-    on('session.usage', usage({ window: 1_000_000, tokens: 42_300, percent: 4 }))
-    checkout(on, { remote: null, branch: 'main' }, 'Laptop')
-    await start($)
-
-    const ui = await $.ui.mount({ plugin: 'status-line', surface: 'desktop', viewport, ...band })
-    const host = await ui.find({ type: 'Text', text: 'Laptop' })
-    expect(host?.props).toMatchObject({ dimColor: true })
-    expect(host?.props.color).toBeUndefined()
-    await ui.unmount()
-  })
-
-  test('draws every host dim with no home host set', async ($, on) => {
+  test('draws the main computer dim, whatever its name', { options: { main_computer: true } }, async ($, on) => {
     on('session.usage', usage({ window: 1_000_000, tokens: 42_300, percent: 4 }))
     checkout(on, { remote: null, branch: 'main' }, 'mini')
     await start($)
@@ -244,6 +232,16 @@ describe('status-line git label', () => {
     const host = await ui.find({ type: 'Text', text: 'mini' })
     expect(host?.props).toMatchObject({ dimColor: true })
     expect(host?.props.color).toBeUndefined()
+    await ui.unmount()
+  })
+
+  test('ignores a home_host left over from before the switch', { options: { home_host: 'mini' } }, async ($, on) => {
+    on('session.usage', usage({ window: 1_000_000, tokens: 42_300, percent: 4 }))
+    checkout(on, { remote: null, branch: 'main' }, 'mini')
+    await start($)
+
+    const ui = await $.ui.mount({ plugin: 'status-line', surface: 'desktop', viewport, ...band })
+    expect((await ui.find({ type: 'Text', text: 'mini' }))?.props).toMatchObject({ color: 'suggestion' })
     await ui.unmount()
   })
 
