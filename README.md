@@ -9,13 +9,14 @@ The account comes from the remote. A remote that uses an SSH host alias like `gi
 
 ## Install
 
-In the Desktop app: click **+** next to the prompt box, then **Plugins**, **Add marketplace** with `Afterthoughtt/status-line`, then **Add plugin**.
+From a shell, with `claude` on your PATH (or the Desktop app's bundled copy in its place):
 
-In a terminal session:
+```bash
+claude plugin marketplace add Afterthoughtt/status-line
+claude plugin install status-line@local-mods --config home_host=<your main computer's hostname>
+```
 
-```
-/plugin install status-line --marketplace Afterthoughtt/status-line
-```
+The row shows in new Desktop sessions, or after `/reload-plugins` in an open one. To have each push reach you on its own, add `"autoUpdate": true` to the `local-mods` entry under `extraKnownMarketplaces` in `~/.claude/settings.json`. Claude Code then checks the repo shortly after a session starts.
 
 ## Setting
 

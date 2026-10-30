@@ -1,6 +1,5 @@
 {
   "name": "status-line",
-  "version": "0.2.0",
   "description": "A status row above the prompt in the Desktop app: the session's context fill (amber at 200k, red at 250k), and the computer, git account and branch it runs on",
   "author": { "name": "Afterthoughtt" },
   "repository": "https://github.com/Afterthoughtt/status-line",
